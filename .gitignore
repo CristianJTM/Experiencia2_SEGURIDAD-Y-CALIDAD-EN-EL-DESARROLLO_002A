@@ -1,0 +1,16 @@
+# IDEs
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+*.gz
+
+# Maven
+target/
+
+# Node (por si acaso)
+node_modules/
