@@ -33,7 +33,12 @@ public class InvoiceService {
     }
 
     public Invoice saveInvoice(Invoice invoice) {
-        // Validar que los medicamentos existen
+
+        if (invoice.getAppointment() == null || invoice.getAppointment().getId() == null) {
+            throw new IllegalArgumentException("La factura debe estar asociada a una visita.");
+        }
+
+            // Validar que los medicamentos existen
         List<Medication> validMedications = StreamSupport.stream(
                 medicationRepository.findAllById(
                         invoice.getMedications().stream().map(Medication::getId).collect(Collectors.toList())

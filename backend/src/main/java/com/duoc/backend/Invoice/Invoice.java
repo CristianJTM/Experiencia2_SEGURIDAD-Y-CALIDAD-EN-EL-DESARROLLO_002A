@@ -1,5 +1,6 @@
 package com.duoc.backend.Invoice;
 
+import com.duoc.backend.Appointment.Appointment;
 import com.duoc.backend.Care.Care;
 import com.duoc.backend.Medication.Medication;
 
@@ -16,6 +17,10 @@ public class Invoice {
     private String patientName;
     private LocalDate date;
     private LocalTime time;
+
+    @ManyToOne
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 
     @ManyToMany
     @JoinTable(
@@ -92,5 +97,13 @@ public class Invoice {
 
     public void setTotalCost(Double totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
 }
