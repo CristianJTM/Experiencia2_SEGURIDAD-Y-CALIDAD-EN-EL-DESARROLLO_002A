@@ -10,6 +10,8 @@ services:
       - "3306:3306"
     command:
       - --default-authentication-plugin=mysql_native_password
+    networks:
+      - net
 
   backend:
     build: ./backend
@@ -21,3 +23,35 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-cdy2203-1:3306/mydatabase
       SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - net
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: always
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+    networks:
+      - net
+    environment:
+      - JENKINS_OPTS=--prefix=/jenkins
+      - JENKINS_SLAVE_AGENT_PORT=50000
+
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    restart: always
+    ports:
+      - "9000:9000"
+    networks:
+      - net
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+
+networks:
+  net:
+    driver: bridge
