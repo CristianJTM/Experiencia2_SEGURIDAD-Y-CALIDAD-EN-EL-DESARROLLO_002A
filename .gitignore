@@ -14,3 +14,7 @@ target/
 
 # Node (por si acaso)
 node_modules/
+
+# Environment variables
+.env
+*.env
